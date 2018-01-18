@@ -12,7 +12,7 @@ class BNFixSortProductImages extends Module
     {
         $this->name = 'bnfixsortproductimages';
         $this->tab = 'administration';
-        $this->version = '0.1.0';
+        $this->version = '0.1.1';
         $this->author = 'Brand New srl';
         $this->need_instance = 0;
         $this->bootstrap = true;
