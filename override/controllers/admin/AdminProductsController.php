@@ -4,14 +4,13 @@ class AdminProductsController extends AdminProductsControllerCore
 {
     public function ajaxProcessUpdateImagePosition()
     {
+        $this->json = true;
+
         if ($this->tabAccess['edit'] === '0') {
             return die(Tools::jsonEncode(array('error' => $this->l('You do not have the right permission'))));
         }
         $res = false;
         if ($json = Tools::getValue('json')) {
-            // If there is an exception, at least the response is in JSON format.
-            $this->json = true;
-
             $res = true;
             $json = stripslashes($json);
             $images = Tools::jsonDecode($json, true);
@@ -26,7 +25,7 @@ class AdminProductsController extends AdminProductsControllerCore
                 $sql = 'SELECT * FROM `' . _DB_PREFIX_ . $def['table'] . '` WHERE `' . $def['primary'] . '` = ' . (int)$id;
                 $fields_from_table = Db::getInstance()->getRow($sql);
                 foreach ($def['fields'] as $key => $value) {
-                    if (!$value['lang']) {
+                    if (!isset($value['lang']) || !$value['lang']) {
                         $img->{$key} = $fields_from_table[$key];
                     }
                 }
@@ -43,6 +42,8 @@ class AdminProductsController extends AdminProductsControllerCore
 
     public function ajaxProcessUpdateCover()
     {
+        $this->json = true;
+
         if ($this->tabAccess['edit'] === '0') {
             return die(Tools::jsonEncode(array('error' => $this->l('You do not have the right permission'))));
         }
@@ -58,7 +59,7 @@ class AdminProductsController extends AdminProductsControllerCore
         $sql = 'SELECT * FROM `' . _DB_PREFIX_ . $def['table'] . '` WHERE `' . $def['primary'] . '` = ' . $id_image;
         $fields_from_table = Db::getInstance()->getRow($sql);
         foreach ($def['fields'] as $key => $value) {
-            if (!$value['lang']) {
+            if (!isset($value['lang']) || !$value['lang']) {
                 $img->{$key} = $fields_from_table[$key];
             }
         }
